@@ -1,0 +1,24 @@
+;; Copyright © 2026 JoinIn AI, Inc. Released under the MIT License (see LICENSE).
+;;
+;; Security lint rules — code-pattern scanning for the RCE/XXE-prone core
+;; vars. clj-kondo can only discourage Clojure vars, not Java interop
+;; members, so weak-crypto patterns are not lintable here; centralize
+;; crypto in one namespace and review direct javax.crypto/java.security use.
+;;
+;; To exempt a legitimate use, add a :config-in-ns entry (namespace
+;; granularity, with a why-comment) rather than an inline ignore —
+;; exceptions stay visible in one place.
+{:linters
+ {:discouraged-var
+  {:level :error
+   clojure.core/read-string {:message "read-string evaluates #=() — RCE on untrusted input; use clojure.edn/read-string"}
+   clojure.core/read        {:message "read evaluates #=() — RCE on untrusted streams; use clojure.edn/read"}
+   clojure.core/eval        {:message "eval on constructed data is an RCE foothold; if genuinely needed, exempt the namespace below"}
+   clojure.core/load-string {:message "load-string evaluates arbitrary code; use clojure.edn/read-string for data"}
+   clojure.core/load-reader {:message "load-reader evaluates arbitrary code from a stream"}
+   clojure.core/load-file   {:message "load-file executes code from a path — path injection becomes RCE"}
+   clojure.xml/parse        {:message "clojure.xml/parse resolves external entities (XXE); use clojure.data.xml with :supporting-external-entities false"}}}
+
+ ;; :config-in-ns example — exempt a namespace, with a why-comment:
+ ;; {my.app.repl-scripts {:linters {:discouraged-var {clojure.core/load-file {:level :off}}}}}
+ }

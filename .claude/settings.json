@@ -1,0 +1,30 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "clj-paren-repair-claude-hook --cljfmt",
+            "timeout": 30,
+            "statusMessage": "Repairing Clojure parens..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/scripts/hook-clj-kondo.sh",
+            "timeout": 15,
+            "statusMessage": "Linting Clojure..."
+          }
+        ]
+      }
+    ]
+  }
+}
