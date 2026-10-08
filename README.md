@@ -18,8 +18,22 @@ Clone it, hand it to your agent — you're 80% of the way.
 | Spec patterns: envelope + payload multispec, boundary helpers | `src/example/specs.cljc` | §6 — one definition replaces four |
 | Generated test data demo | `examples/spec_gen.clj` | §6 — every spec is a generator |
 | REPL-tuned `diagnosing-bugs` skill (fork of [Matt Pocock's](https://github.com/mattpocock/skills)) | `.claude/skills/diagnosing-bugs/` | §3 — the loop |
-| `style-review` skill + the house style guide it enforces | `.claude/skills/style-review/`, `docs/style/CLOJURE-STYLE.md` | — |
+| `style-review` skill + layered style guides (house guide, operative; community + Nubank guides vendored as fallback/reference) | `.claude/skills/style-review/`, `docs/style/` | — |
 | Agent operating doctrine (write-first-then-eval, live-image discipline, image-drift checks) | `CLAUDE.md` | §3 |
+
+## How do you make the agent *better at Clojure*?
+
+Someone asked exactly this after the Conj talk, and the answer deserved
+better than the one it got from the podium, so here it is. Three layers:
+
+1. **Mechanical guardrails** — the paren-repair hook and clj-kondo-on-write
+   catch structural and semantic errors at the moment of writing.
+2. **Layered style guides** — `docs/style/CLOJURE-STYLE.md` (operative)
+   over the vendored community guide (fallback), wired into `CLAUDE.md` so
+   the agent follows them and the `/style-review` skill can enforce them.
+3. **Operating doctrine** — `CLAUDE.md`'s write-first-then-eval and
+   live-image discipline, which make the agent *use* the REPL instead of
+   working like it's still in a compile-restart language.
 
 ## Quickstart
 

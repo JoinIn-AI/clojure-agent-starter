@@ -9,7 +9,7 @@ Claude Code alike.
 ## Precedence
 
 1. **This document** — house rules and deviations.
-2. **[The community Clojure style guide](https://github.com/bbatsov/clojure-style-guide)**
+2. **[The community Clojure style guide](clojure-style-guide-community.adoc)**
    (bbatsov, vendored) — the default answer for anything not covered here.
    Rendered version: <https://guide.clojure.style>.
 3. **[Nubank's style guide](clojure-style-guide-nubank.md)** (vendored) — a

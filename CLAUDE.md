@@ -96,6 +96,21 @@ everywhere — discipline is not scarce anymore.
   If clj-kondo blocks a write, the error is semantic (wrong arity, unresolved
   symbol), not structural.
 
+## Style guides — layered
+
+`docs/style/CLOJURE-STYLE.md` is the operative style guide — naming,
+namespace aliases, layout, idioms, testing conventions. Follow it in
+everything you write. It takes precedence over the vendored community
+guide (`docs/style/clojure-style-guide-community.adoc`), which is the
+fallback for anything the house guide doesn't cover. Nubank's fork is
+vendored alongside as reference.
+
+Why this matters for an agent: a written, layered rulebook turns style
+from per-session taste into something checkable — the `/style-review`
+skill reviews code against it, and deviations are findings, not
+opinions. Keep the vendored guides as snapshots; house rules and
+deviations go in CLOJURE-STYLE.md.
+
 ## Idioms
 
 - Macros are a last resort, as is the style. Don't reach for them early.
